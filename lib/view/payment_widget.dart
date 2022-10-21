@@ -16,7 +16,8 @@ class PaymentWidget extends StatefulWidget {
   BuildContext? loadingDialogContext;
   SnackBar? snackBar;
 
-  PaymentWidget({required this.request, required this.style, required this.mainContext});
+  PaymentWidget(
+      {required this.request, required this.style, required this.mainContext});
 
   @override
   State<StatefulWidget> createState() => _PaymentState();
@@ -32,11 +33,18 @@ class _PaymentState extends State<PaymentWidget>
   void initState() {
     _isDisabled = false;
     super.initState();
+    // _handleButtonClicked();
+
+    controller = NavigationController(
+      Client(),
+      widget.style,
+      this,
+    );
+    _handlePayment();
   }
 
   @override
   Widget build(BuildContext context) {
-    controller = NavigationController(Client(), widget.style, this);
     return MaterialApp(
       navigatorKey: _navigatorKey,
       debugShowCheckedModeBanner: widget.request.isTestMode,
@@ -58,7 +66,7 @@ class _PaymentState extends State<PaymentWidget>
               autofocus: true,
               onPressed: _handleButtonClicked,
               style: ElevatedButton.styleFrom(
-                  primary: widget.style.getButtonColor(),
+                  backgroundColor: widget.style.getButtonColor(),
                   textStyle: widget.style.getButtonTextStyle()),
               child: Text(
                 widget.style.getButtonText(),
@@ -101,14 +109,15 @@ class _PaymentState extends State<PaymentWidget>
 
   void _showConfirmDialog() {
     FlutterwaveViewUtils.showConfirmPaymentModal(
-        widget.mainContext,
-        widget.request.currency,
-        widget.request.amount,
-        widget.style.getMainTextStyle(),
-        widget.style.getDialogBackgroundColor(),
-        widget.style.getDialogCancelTextStyle(),
-        widget.style.getDialogContinueTextStyle(),
-        _handlePayment);
+      widget.mainContext,
+      widget.request.currency,
+      widget.request.amount,
+      widget.style.getMainTextStyle(),
+      widget.style.getDialogBackgroundColor(),
+      widget.style.getDialogCancelTextStyle(),
+      widget.style.getDialogContinueTextStyle(),
+      _handlePayment,
+    );
   }
 
   @override

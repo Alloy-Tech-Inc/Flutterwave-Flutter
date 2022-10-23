@@ -235,7 +235,7 @@ class _MyHomePageState extends State<MyHomePage> {
         paymentOptions: "card, payattitude, barter",
         customization: Customization(title: "Test Payment"),
         isTestMode: false);
-    final ChargeResponse response = await flutterwave.charge((){
+    await flutterwave.charge((){
       print("cancelled");
     }, (ChargeResponse responser){
       print("response second is ${responser.toJson()}");
@@ -243,13 +243,6 @@ class _MyHomePageState extends State<MyHomePage> {
     }, (){
       print("error");
     });
-
-    if (response != null) {
-      this.showLoading(response.status);
-      print("response main is ${response.toJson()}");
-    } else {
-      // this.showLoading("No Response!");
-    }
   }
 
   String getPublicKey() {

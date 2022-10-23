@@ -40,7 +40,7 @@ class Flutterwave {
       this.style});
 
   /// Starts Standard Transaction
-  Future<ChargeResponse> charge() async {
+  Future<ChargeResponse> charge(onCancelled, onSuccess, onError) async {
     final request = StandardRequest(
         txRef: txRef,
         amount: amount,
@@ -62,6 +62,9 @@ class Flutterwave {
           request: request,
           style: style ?? FlutterwaveStyle(),
           mainContext: context,
+          onCancelled: onCancelled,
+          onTransactionError: onError,
+          onTransactionSuccess: onSuccess,
         ),
       ),
     );

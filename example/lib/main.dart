@@ -227,7 +227,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ? this.getPublicKey()
             : this.publicKeyController.text.trim(),
         currency: this.selectedCurrency,
-        redirectUrl: "https://google.com",
+        redirectUrl: "_blank",
         txRef: Uuid().v1(),
         amount: this.amountController.text.toString().trim(),
         customer: customer,
@@ -235,10 +235,18 @@ class _MyHomePageState extends State<MyHomePage> {
         paymentOptions: "card, payattitude, barter",
         customization: Customization(title: "Test Payment"),
         isTestMode: false);
-    final ChargeResponse response = await flutterwave.charge();
+    final ChargeResponse response = await flutterwave.charge((){
+      print("cancelled");
+    }, (ChargeResponse responser){
+      print("response second is ${responser.toJson()}");
+      print(responser);
+    }, (){
+      print("error");
+    });
+
     if (response != null) {
       this.showLoading(response.status);
-      print("${response.toJson()}");
+      print("response main is ${response.toJson()}");
     } else {
       // this.showLoading("No Response!");
     }

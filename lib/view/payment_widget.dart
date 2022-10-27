@@ -12,12 +12,15 @@ class PaymentWidget extends StatefulWidget {
   final FlutterwaveStyle style;
   final StandardRequest request;
   final BuildContext mainContext;
+  final VoidCallback onCancelled;
+  final VoidCallback onTransactionError;
+  final Function onTransactionSuccess;
 
   BuildContext? loadingDialogContext;
   SnackBar? snackBar;
 
   PaymentWidget(
-      {required this.request, required this.style, required this.mainContext});
+      {required this.request, required this.style, required this.mainContext, required this.onCancelled, required this.onTransactionError, required this.onTransactionSuccess});
 
   @override
   State<StatefulWidget> createState() => _PaymentState();
@@ -123,11 +126,13 @@ class _PaymentState extends State<PaymentWidget>
   @override
   onTransactionError() {
     _showErrorAndClose("transaction error");
+    widget.onTransactionError();
   }
 
   @override
   onCancelled() {
     FlutterwaveViewUtils.showToast(widget.mainContext, "Transaction Cancelled");
+    widget.onCancelled();
     Navigator.pop(widget.mainContext);
   }
 
@@ -135,6 +140,7 @@ class _PaymentState extends State<PaymentWidget>
   onTransactionSuccess(String id, String txRef) {
     final ChargeResponse chargeResponse = ChargeResponse(
         status: "success", success: true, transactionId: id, txRef: txRef);
-    Navigator.pop(this.widget.mainContext, chargeResponse);
+    widget.onTransactionSuccess(chargeResponse);
+    //Navigator.pop(this.widget.mainContext, chargeResponse);
   }
 }

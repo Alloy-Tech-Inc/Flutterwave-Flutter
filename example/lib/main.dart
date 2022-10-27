@@ -227,7 +227,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ? this.getPublicKey()
             : this.publicKeyController.text.trim(),
         currency: this.selectedCurrency,
-        redirectUrl: "_blank",
+        redirectUrl: "https://google.com",
         txRef: Uuid().v1(),
         amount: this.amountController.text.toString().trim(),
         customer: customer,

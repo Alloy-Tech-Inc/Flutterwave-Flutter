@@ -181,7 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ? this.getPublicKey()
             : this.publicKeyController.text.trim(),
         currency: this.selectedCurrency,
-        redirectUrl: 'https://facebook.com',
+        redirectUrl: 'https://alloy.africa',
         txRef: Uuid().v1(),
         amount: this.amountController.text.toString().trim(),
         customer: customer,
@@ -248,7 +248,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> showLoading(String message) {
     return showDialog(
       context: this.context,
-      barrierDismissible: false,
+      barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
           content: Container(
